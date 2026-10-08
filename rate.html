@@ -1,0 +1,46 @@
+<title>Freelance Rate Calculator</title>
+<style>
+/* layout: single column tool, inputs left, result right on wide screens */
+:root{--bg:#f3f5f4;--fg:#14211c;--mut:#5b6b64;--card:#fff;--line:#d5ddd9;--accent:#0b6b4f;--accent-fg:#fff;--f-d:'Fraunces',Georgia,serif;--f-b:'IBM Plex Sans',system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1714;--fg:#e6eee9;--mut:#93a49b;--card:#16211d;--line:#2a3a34;--accent:#4cc9a0;--accent-fg:#06231a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1714;--fg:#e6eee9;--mut:#93a49b;--card:#16211d;--line:#2a3a34;--accent:#4cc9a0;--accent-fg:#06231a;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--f-b);padding-inline:16px;padding-block:24px}
+.w{max-width:880px;margin:auto;display:grid;gap:20px}
+h1{font:600 clamp(26px,5vw,38px)/1.1 var(--f-d);margin:0;text-wrap:balance}
+p{margin:0;color:var(--mut)}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px;display:grid;gap:14px;min-width:0}
+label{display:grid;gap:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}
+input{font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--fg)}
+input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.big{font:600 56px/1 var(--f-d);color:var(--accent);font-variant-numeric:tabular-nums}
+.r{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:8px;font-variant-numeric:tabular-nums}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<div class="w">
+<h1>What hourly rate covers the income you want?</h1>
+<p>Example numbers are filled in. Change them to match your situation.</p>
+<div class="g">
+<div class="c">
+<label>Take-home income wanted per year ($)<input id="inc" type="number" value="70000"></label>
+<label>Business costs per year ($)<input id="exp" type="number" value="6000"></label>
+<label>Tax rate (%)<input id="tax" type="number" value="25"></label>
+<label>Weeks off per year<input id="off" type="number" value="6"></label>
+<label>Billable hours per week<input id="hrs" type="number" value="25"></label>
+</div>
+<div class="c">
+<p>Minimum hourly rate</p>
+<div class="big" id="rate">$0</div>
+<div class="r"><span>Revenue needed</span><b id="rev">0</b></div>
+<div class="r"><span>Billable hours per year</span><b id="bh">0</b></div>
+<div class="r"><span>Day rate (8h)</span><b id="day">0</b></div>
+<div class="r"><span>Rate with 20% buffer</span><b id="buf">0</b></div>
+</div></div></div>
+<script>
+const $=id=>document.getElementById(id),m=n=>'$'+Math.round(n).toLocaleString('en-US');
+function calc(){const v=id=>+$(id).value||0,t=Math.min(v('tax'),90)/100,
+rev=(v('inc')/(1-t))+v('exp'),bh=Math.max(1,(52-v('off'))*v('hrs')),r=rev/bh;
+$('rate').textContent=m(r);$('rev').textContent=m(rev);$('bh').textContent=Math.round(bh).toLocaleString('en-US');
+$('day').textContent=m(r*8);$('buf').textContent=m(r*1.2)}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));calc();
+</script>
