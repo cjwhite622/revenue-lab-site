@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Late Payment Fee Calculator + Overdue Invoice Email</title>
+<meta name="description" content="Free late payment fee calculator for freelancers. Enter the invoice amount and days overdue, get the late fee, total due and a ready-to-send overdue invoice email.">
+<style>:root{--bg:#f6f7f5;--fg:#16211c;--m:#58675f;--a:#0b6b4f;--c:#fff;--l:#d5ddd9}@media(prefers-color-scheme:dark){:root{--bg:#0f1714;--fg:#e6eee9;--m:#93a49b;--a:#4cc9a0;--c:#16211d;--l:#2a3a34}}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:720px;margin:auto}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15}h2{margin-top:2em}p,li{color:var(--m)}
+.card{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:18px;display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:13px;color:var(--m)}input,select{font:inherit;padding:8px 10px;border:1px solid var(--l);border-radius:4px;background:var(--bg);color:var(--fg)}
+.big{font-size:44px;font-weight:700;color:var(--a);font-variant-numeric:tabular-nums}
+pre{white-space:pre-wrap;background:var(--c);border:1px solid var(--l);padding:14px;border-radius:8px;color:var(--fg);font:14px/1.55 ui-monospace,monospace}
+a.b{display:inline-block;background:var(--a);color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:600}button{background:var(--a);color:#fff;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}</style></head><body><main>
+<h1>Late payment fee calculator</h1>
+<p>Work out what an overdue invoice should cost the client, then copy a polite, firm email. Check your contract and local law first: many places cap late fees or require them to be agreed in writing.</p>
+<div class="card">
+<label>Invoice amount<input id="amt" type="number" min="0" value="1500"></label>
+<label>Days overdue<input id="days" type="number" min="0" value="21"></label>
+<label>Fee type<select id="type"><option value="mo">Interest per month (%)</option><option value="flat">Flat fee (%) of invoice</option><option value="amt">Flat fee (fixed amount)</option></select></label>
+<label>Rate / amount<input id="rate" type="number" min="0" step="0.1" value="1.5"></label>
+<div>Late fee</div><div class="big" id="fee">$0</div><div>Total now due: <strong id="tot"></strong></div>
+</div>
+<h2>Overdue invoice email</h2>
+<pre id="mail"></pre><p><button id="cp">Copy email</button></p>
+<h2>Want the whole payment sequence?</h2>
+<p>The Freelancer Client Kit has a 4-email late-payment sequence (day 1, 7, 14, 30), scope-creep scripts, proposal and contract templates and 15 AI prompts.</p>
+<p><a class="b" href="https://buy.stripe.com/dRm8wRgJs387g4838gebu01">Get the kit — $12</a></p>
+<p><a href="index.html">Home</a> · <a href="rate.html">Free rate calculator</a></p>
+</main><script>
+const $=i=>document.getElementById(i),m=n=>'$'+n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+function go(){const a=+$('amt').value||0,d=+$('days').value||0,r=+$('rate').value||0,t=$('type').value;
+let f=t==='mo'?a*r/100*(d/30):t==='flat'?a*r/100:r;if(d<=0)f=0;$('fee').textContent=m(f);$('tot').textContent=m(a+f);
+$('mail').textContent=`Subject: Invoice overdue by ${d} days (${m(a)})
+
+Hi [Name],
+
+Our records show invoice [#] for ${m(a)} was due ${d} days ago and is still unpaid. Could you let me know when I can expect payment, or if there is a problem with the invoice I can fix?
+
+${f>0?`As per our agreement, a late fee of ${m(f)} applies, bringing the total to ${m(a+f)}. `:''}You can pay at [payment link]. If you've already sent it, thanks and please ignore this.
+
+Best,
+[Your name]`}
+['amt','days','rate','type'].forEach(i=>$(i).addEventListener('input',go));
+$('cp').onclick=()=>navigator.clipboard.writeText($('mail').textContent).then(()=>{$('cp').textContent='Copied'});go();
+</script></body></html>
