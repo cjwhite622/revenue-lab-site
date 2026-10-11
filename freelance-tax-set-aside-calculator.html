@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Freelance Tax Set-Aside Calculator (US estimate)</title>
+<meta name="description" content="Free freelance tax calculator: enter an invoice or income and see how much to set aside for self-employment tax and income tax. Quick US estimate.">
+<style>:root{--bg:#f6f7f5;--fg:#16211c;--m:#58675f;--a:#0b6b4f;--c:#fff;--l:#d5ddd9}@media(prefers-color-scheme:dark){:root{--bg:#0f1714;--fg:#e6eee9;--m:#93a49b;--a:#4cc9a0;--c:#16211d;--l:#2a3a34}}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:720px;margin:auto}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15}h2{margin-top:2em}p,li{color:var(--m)}
+.card{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:18px;display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:13px;color:var(--m)}input,select{font:inherit;padding:8px 10px;border:1px solid var(--l);border-radius:4px;background:var(--bg);color:var(--fg)}
+.big{font-size:44px;font-weight:700;color:var(--a);font-variant-numeric:tabular-nums}
+pre{white-space:pre-wrap;background:var(--c);border:1px solid var(--l);padding:14px;border-radius:8px;color:var(--fg);font:14px/1.55 ui-monospace,monospace}
+a.b{display:inline-block;background:var(--a);color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:600}button{background:var(--a);color:#fff;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}</style></head><body><main>
+<h1>How much should I set aside for taxes?</h1>
+<p>A quick US estimate for freelancers and sole proprietors. Self-employment tax is 15.3% on 92.35% of net profit (Social Security part capped at a yearly wage base, ignored here for simplicity). Add your own expected income-tax rate. This is a planning estimate, not tax advice.</p>
+<div class="card">
+<label>Income or invoice amount<input id="inc" type="number" min="0" value="5000"></label>
+<label>Business expenses on it<input id="exp" type="number" min="0" value="500"></label>
+<label>Your expected income tax rate (%)<input id="rate" type="number" min="0" max="50" step="0.5" value="12"></label>
+<label>State tax rate (%)<input id="st" type="number" min="0" max="15" step="0.5" value="4"></label>
+<div>Set aside</div><div class="big" id="tot"></div>
+<div id="pct"></div><div id="det"></div>
+</div>
+<h2>Rule of thumb</h2><ul><li>Most US freelancers land between 25% and 30% of net profit.</li><li>Move that share into a separate savings account the day each invoice is paid.</li><li>Quarterly estimated payments are due mid-April, mid-June, mid-September and mid-January.</li></ul>
+<h2>Want the ready-made scripts?</h2><p>The Freelancer Client Kit has pricing formulas that build taxes and unpaid time into your rate, plus a late-payment email sequence so the money arrives on time.</p><p><a class="b" href="https://buy.stripe.com/dRm8wRgJs387g4838gebu01">Get the kit — $12</a></p>
+<p><a href="index.html">Home</a> · <a href="rate.html">Free rate calculator</a> · <a href="late-fee-calculator.html">Late fee calculator</a> · <a href="freelance-tax-set-aside-calculator.html">Tax set-aside</a> · <a href="scope-change-email-generator.html">Scope change email</a></p>
+</main><script>
+const $=i=>document.getElementById(i),m=n=>'$'+n.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0});
+function go(){const n=Math.max(0,(+$('inc').value||0)-(+$('exp').value||0)),se=n*.9235*.153,half=se/2,inc=Math.max(0,n-half)*((+$('rate').value||0)/100),st=n*((+$('st').value||0)/100),t=se+inc+st;
+$('tot').textContent=m(t);$('pct').textContent=n?`That is ${(t/n*100).toFixed(1)}% of your ${m(n)} net profit.`:'';
+$('det').textContent=`Self-employment tax ${m(se)} · Federal income tax ${m(inc)} · State ${m(st)}`}
+['inc','exp','rate','st'].forEach(i=>$(i).addEventListener('input',go));go();
+</script></body></html>

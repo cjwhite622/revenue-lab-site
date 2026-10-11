@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scope Change Email Generator for Freelancers</title>
+<meta name="description" content="Free scope creep email generator: describe the extra request, add hours and rate, and copy a polite change-order email that protects your project.">
+<style>:root{--bg:#f6f7f5;--fg:#16211c;--m:#58675f;--a:#0b6b4f;--c:#fff;--l:#d5ddd9}@media(prefers-color-scheme:dark){:root{--bg:#0f1714;--fg:#e6eee9;--m:#93a49b;--a:#4cc9a0;--c:#16211d;--l:#2a3a34}}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:720px;margin:auto}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15}h2{margin-top:2em}p,li{color:var(--m)}
+.card{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:18px;display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:13px;color:var(--m)}input,select{font:inherit;padding:8px 10px;border:1px solid var(--l);border-radius:4px;background:var(--bg);color:var(--fg)}
+.big{font-size:44px;font-weight:700;color:var(--a);font-variant-numeric:tabular-nums}
+pre{white-space:pre-wrap;background:var(--c);border:1px solid var(--l);padding:14px;border-radius:8px;color:var(--fg);font:14px/1.55 ui-monospace,monospace}
+a.b{display:inline-block;background:var(--a);color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:600}button{background:var(--a);color:#fff;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}</style></head><body><main>
+<h1>Scope change email generator</h1>
+<p>A client asks for "one small thing". Fill in the details and copy a friendly email that prices the extra work before you start it.</p>
+<div class="card">
+<label>Client first name<input id="nm" value="Sam"></label>
+<label>The extra request<input id="rq" value="adding a second landing page"></label>
+<label>Extra hours<input id="hr" type="number" min="0" step="0.5" value="6"></label>
+<label>Hourly rate<input id="rt" type="number" min="0" value="75"></label>
+<label>Extra days added to deadline<input id="dy" type="number" min="0" value="3"></label>
+<div>Change order total</div><div class="big" id="tot"></div>
+</div>
+<h2>Your email</h2><pre id="mail"></pre><p><button id="cp">Copy email</button></p>
+<h2>Want the ready-made scripts?</h2><p>The Freelancer Client Kit has 6 scope-creep scripts (email, call and chat versions), a change-order template and an agreement with scope clauses built in.</p><p><a class="b" href="https://buy.stripe.com/dRm8wRgJs387g4838gebu01">Get the kit — $12</a></p>
+<p><a href="index.html">Home</a> · <a href="rate.html">Free rate calculator</a> · <a href="late-fee-calculator.html">Late fee calculator</a> · <a href="freelance-tax-set-aside-calculator.html">Tax set-aside</a> · <a href="scope-change-email-generator.html">Scope change email</a></p>
+</main><script>
+const $=i=>document.getElementById(i),m=n=>'$'+n.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0});
+function go(){const h=+$('hr').value||0,r=+$('rt').value||0,d=+$('dy').value||0,t=h*r;$('tot').textContent=m(t);
+$('mail').textContent=`Subject: Quick scope update: ${$('rq').value}
+
+Hi ${$('nm').value||'[Name]'},
+
+Happy to help with ${$('rq').value}. It falls outside what we agreed in the original scope, so here is what it would take:
+
+- Extra work: ${h} hours at ${m(r)}/hour = ${m(t)}
+- Timeline: adds ${d} day${d===1?'':'s'} to the delivery date
+
+If that works for you, reply "approved" and I will start right away. If you would rather keep to the original scope and budget, that is fine too, and I will carry on as planned.
+
+Best,
+[Your name]`}
+['nm','rq','hr','rt','dy'].forEach(i=>$(i).addEventListener('input',go));
+$('cp').onclick=()=>navigator.clipboard.writeText($('mail').textContent).then(()=>{$('cp').textContent='Copied'});go();
+</script></body></html>
