@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Airbnb &amp; Vrbo Guest Damage Claim Message Generator (Free)</title>
+<meta name="description" content="Free generator for the message you send a guest, or a platform, after damage: itemized, factual, with photo and receipt checklist. No signup.">
+<style>:root{--bg:#f6f7f5;--fg:#16211c;--m:#58675f;--a:#0b6b4f;--c:#fff;--l:#d5ddd9}@media(prefers-color-scheme:dark){:root{--bg:#0f1714;--fg:#e6eee9;--m:#93a49b;--a:#4cc9a0;--c:#16211d;--l:#2a3a34}}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:720px;margin:auto}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15}h2{margin-top:2em}p,li{color:var(--m)}
+.card{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:18px;display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:13px;color:var(--m)}input,select{font:inherit;padding:8px 10px;border:1px solid var(--l);border-radius:4px;background:var(--bg);color:var(--fg)}
+.big{font-size:44px;font-weight:700;color:var(--a);font-variant-numeric:tabular-nums}
+pre{white-space:pre-wrap;background:var(--c);border:1px solid var(--l);padding:14px;border-radius:8px;color:var(--fg);font:14px/1.55 ui-monospace,monospace}
+a.b{display:inline-block;background:var(--a);color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:600}button{background:var(--a);color:#fff;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}</style><link rel="canonical" href="https://cjwhite622.github.io/revenue-lab-site/str-damage-claim-message.html"><meta property="og:type" content="website"><meta property="og:title" content="Airbnb &amp; Vrbo Guest Damage Claim Message Generator (Free)"><meta property="og:description" content="Free generator for the message you send a guest, or a platform, after damage: itemized, factual, with photo and receipt checklist. No signup."><meta property="og:url" content="https://cjwhite622.github.io/revenue-lab-site/str-damage-claim-message.html"><meta name="twitter:card" content="summary"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Guest Damage Claim Message Generator", "description": "Free generator for the message you send a guest, or a platform, after damage: itemized, factual, with photo and receipt checklist. No signup.", "url": "https://cjwhite622.github.io/revenue-lab-site/str-damage-claim-message.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script></head><body><main>
+<h1>Guest damage claim message generator</h1>
+<p>For short-term rental hosts (Airbnb, Vrbo, direct bookings). Fill in the facts and copy a calm, itemized message. Platform rules and local law vary: read your platform's current damage-claim process and keep claims to real, documented costs. This is a writing aid, not legal advice.</p>
+<div class="card">
+<label>Guest first name<input id="g" value="Alex"></label>
+<label>Property / stay dates<input id="s" value="Lakeview Cabin, Oct 3-6"></label>
+<label>What was damaged (one item per line: description, then cost after a dash)<textarea id="items" rows="4" style="font:inherit;padding:8px;border:1px solid var(--l);border-radius:4px;background:var(--bg);color:var(--fg)">Living room lamp, broken - 45
+Carpet stain, professional cleaning - 120</textarea></label>
+<label>Where the claim goes<select id="to"><option value="guest">Message to guest first</option><option value="plat">Note to platform support</option></select></label>
+<div>Total claimed</div><div class="big" id="tot">$0</div>
+</div>
+<h2>Your message</h2>
+<pre id="mail"></pre><p><button id="cp">Copy message</button></p>
+<h2>Before you send: evidence checklist</h2>
+<ul><li>Dated check-in and check-out photos of the same spots (wide shot, then close-up).</li><li>Receipts or quotes for each repair or replacement. Estimates are weaker than invoices.</li><li>The house rules and booking confirmation the guest agreed to.</li><li>Your message history with the guest, unedited.</li><li>Charge for actual loss only. Normal wear and tear and the age of an item usually reduce what you can recover.</li><li>Send within the platform's claim window; check how many days you have.</li></ul>
+<p><a href="index.html">More free tools for people who bill clients</a> · <a href="late-fee-calculator.html">Late fee calculator</a> · <a href="scope-change-email-generator.html">Scope change email</a></p>
+</main><script>
+const $=i=>document.getElementById(i),m=n=>'$'+n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+function go(){const rows=$('items').value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const k=l.lastIndexOf('-');const c=k>-1?parseFloat(l.slice(k+1).replace(/[^0-9.]/g,'')):NaN;return{d:(k>-1?l.slice(0,k):l).trim().replace(/,\s*$/,''),c:isNaN(c)?0:c}});
+const tot=rows.reduce((a,r)=>a+r.c,0),list=rows.map(r=>'- '+r.d+': '+m(r.c)).join('\n');$('tot').textContent=m(tot);
+const g=$('g').value||'[Guest]',s=$('s').value||'[stay]';
+$('mail').textContent=$('to').value==='guest'?
+`Hi ${g},
+
+Thanks for staying with us (${s}). During turnover we found a few items that need repair or replacement:
+
+${list}
+
+Total: ${m(tot)}. I've attached dated before/after photos and the receipts or quotes for each item. Could you let me know if you'd like to discuss any of it? I'm happy to look at it together. If we can't resolve it directly, I'll submit the claim through the platform's resolution process.
+
+Thanks,
+[Your name]`:
+`Hello,
+
+I'm requesting reimbursement for damage found after the stay of ${g} (${s}).
+
+${list}
+
+Total: ${m(tot)}. Attached: check-in and check-out photos from the same locations, receipts or quotes, the house rules, and my message history with the guest. I contacted the guest on [date] and [they did not respond / we could not agree]. Please let me know if you need anything else.
+
+Thank you,
+[Your name]`}
+['g','s','items','to'].forEach(i=>$(i).addEventListener('input',go));
+$('cp').onclick=()=>navigator.clipboard.writeText($('mail').textContent).then(()=>{$('cp').textContent='Copied'});go();
+</script></body></html>
