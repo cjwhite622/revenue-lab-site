@@ -22,7 +22,7 @@ Carpet stain, professional cleaning - 120</textarea></label>
 <pre id="mail"></pre><p><button id="cp">Copy message</button></p>
 <h2>Before you send: evidence checklist</h2>
 <ul><li>Dated check-in and check-out photos of the same spots (wide shot, then close-up).</li><li>Receipts or quotes for each repair or replacement. Estimates are weaker than invoices.</li><li>The house rules and booking confirmation the guest agreed to.</li><li>Your message history with the guest, unedited.</li><li>Charge for actual loss only. Normal wear and tear and the age of an item usually reduce what you can recover.</li><li>Send within the platform's claim window; check how many days you have.</li></ul>
-<p><a href="index.html">More free tools for people who bill clients</a> · <a href="late-fee-calculator.html">Late fee calculator</a> · <a href="scope-change-email-generator.html">Scope change email</a></p>
+<p><a href="str-damage-claim-deadline-calculator.html">Claim deadline calculator</a> · <a href="index.html">More free tools for people who bill clients</a> · <a href="late-fee-calculator.html">Late fee calculator</a> · <a href="scope-change-email-generator.html">Scope change email</a></p>
 </main><script>
 const $=i=>document.getElementById(i),m=n=>'$'+n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
 function go(){const rows=$('items').value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const k=l.lastIndexOf('-');const c=k>-1?parseFloat(l.slice(k+1).replace(/[^0-9.]/g,'')):NaN;return{d:(k>-1?l.slice(0,k):l).trim().replace(/,\s*$/,''),c:isNaN(c)?0:c}});
