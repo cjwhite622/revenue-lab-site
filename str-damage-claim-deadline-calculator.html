@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Short-Term Rental Damage Claim Deadline Calculator (Free)</title>
+<meta name="description" content="Free calculator: enter checkout date and your platform's claim window to see the last day to file a guest damage claim, with a countdown and an evidence timeline.">
+<style>:root{--bg:#f6f7f5;--fg:#16211c;--m:#58675f;--a:#0b6b4f;--c:#fff;--l:#d5ddd9}@media(prefers-color-scheme:dark){:root{--bg:#0f1714;--fg:#e6eee9;--m:#93a49b;--a:#4cc9a0;--c:#16211d;--l:#2a3a34}}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif;margin:0;padding:24px 16px}main{max-width:720px;margin:auto}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.15}h2{margin-top:2em}p,li{color:var(--m)}
+.card{background:var(--c);border:1px solid var(--l);border-radius:8px;padding:18px;display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:13px;color:var(--m)}input,select{font:inherit;padding:8px 10px;border:1px solid var(--l);border-radius:4px;background:var(--bg);color:var(--fg)}
+.big{font-size:44px;font-weight:700;color:var(--a);font-variant-numeric:tabular-nums}
+pre{white-space:pre-wrap;background:var(--c);border:1px solid var(--l);padding:14px;border-radius:8px;color:var(--fg);font:14px/1.55 ui-monospace,monospace}
+a.b{display:inline-block;background:var(--a);color:#fff;padding:12px 22px;border-radius:6px;text-decoration:none;font-weight:600}button{background:var(--a);color:#fff;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}</style><link rel="canonical" href="https://freelancerclientkit.com/str-damage-claim-deadline-calculator.html"><meta property="og:type" content="website"><meta property="og:title" content="Short-Term Rental Damage Claim Deadline Calculator (Free)"><meta property="og:description" content="Free calculator: enter checkout date and your platform's claim window to see the last day to file a guest damage claim, with a countdown and an evidence timeline."><meta property="og:url" content="https://freelancerclientkit.com/str-damage-claim-deadline-calculator.html"><meta name="twitter:card" content="summary"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Damage Claim Deadline Calculator", "description": "Free calculator: enter checkout date and your platform's claim window to see the last day to file a guest damage claim, with a countdown and an evidence timeline.", "url": "https://freelancerclientkit.com/str-damage-claim-deadline-calculator.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script></head><body><main>
+<h1>Guest damage claim deadline calculator</h1>
+<p>Platforms limit how long after checkout a host can file a damage claim, and the limit changes. Enter the window from your platform's current help page (we do not hard-code it, because it goes stale) and get your last day, days left, and a working timeline.</p>
+<div class="card">
+<label>Checkout date<input id="co" type="date"></label>
+<label>Claim window in days (copy from your platform's current rules)<input id="w" type="number" min="1" value="14"></label>
+<label>Next guest check-in date (optional; some platforms cut the window short)<input id="ni" type="date"></label>
+<div>Last day to file</div><div class="big" id="last">-</div><div id="left"></div>
+</div>
+<h2>Working timeline</h2>
+<ul id="tl"></ul>
+<h2>Why this matters</h2>
+<p>A claim filed late is usually denied however good the evidence is. Photos and quotes take days, so start the evidence on checkout day. Rules vary by platform, plan and country: confirm on your platform's help center. This is a planning aid, not legal advice.</p>
+<p><a href="str-damage-claim-message.html">Damage claim message generator</a> · <a href="index.html">More free tools for people who bill clients</a></p>
+</main><script>
+const $=i=>document.getElementById(i),f=d=>d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'});
+const t=new Date();$('co').value=new Date(t.getTime()-864e5*2-t.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+function go(){const v=$('co').value;if(!v)return;const [y,m,d]=v.split('-').map(Number),co=new Date(y,m-1,d),w=Math.max(1,+$('w').value||14);
+let last=new Date(y,m-1,d+w),note='';const ni=$('ni').value;if(ni){const [a,b,c]=ni.split('-').map(Number),n=new Date(a,b-1,c);if(n<last){last=n;note=' (limited by next check-in)'}}
+const today=new Date(t.getFullYear(),t.getMonth(),t.getDate()),dl=Math.round((last-today)/864e5);
+$('last').textContent=f(last);$('left').textContent=(dl>=0?dl+(dl===1?' day left':' days left'):'Window has passed ('+(-dl)+' days ago)')+note;
+const step=(n,s)=>{const x=new Date(co.getFullYear(),co.getMonth(),co.getDate()+n);return x<=last?'<li><b>'+f(x)+'</b>: '+s+'</li>':''};
+$('tl').innerHTML=step(0,'Photograph damage in the same spots as check-in photos. Message the guest on-platform.')+step(2,'Get repair quotes or receipts.')+step(Math.max(3,Math.floor(w/2)),'Halfway point: send the itemized claim to the guest if not yet resolved.')+'<li><b>'+f(new Date(last.getFullYear(),last.getMonth(),last.getDate()-2))+'</b>: file with the platform at the latest. Leave 2 days buffer.</li>'}
+['co','w','ni'].forEach(i=>$(i).addEventListener('input',go));go();
+</script></body></html>
